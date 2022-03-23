@@ -3,6 +3,7 @@
 require_relative "welcome/version"
 
 module Welcome
-  class Error < StandardError; end
-  # Your code goes here...
+  def self.create(name)
+    puts "Hi, #{name}! Ruby Welcome's you!"
+  end
 end
