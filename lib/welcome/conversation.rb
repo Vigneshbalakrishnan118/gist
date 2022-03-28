@@ -3,7 +3,7 @@
 module Welcome
   class Conversation < Client
     def find_all
-      url = "https://aws-api-testing.getgist.com/onversations?order=desc&order_by=updated_at"
+      url = "https://aws-api-testing.getgist.com/conversations?order=desc&order_by=updated_at"
       @uri = URI(url)
       request = Net::HTTP::Get.new @uri
       trigger_request(request)
