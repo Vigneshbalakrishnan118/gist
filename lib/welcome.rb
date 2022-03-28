@@ -5,7 +5,7 @@ require "welcome/client"
 require "welcome/campaign"
 require "welcome/contact"
 require "welcome/conversation"
-require "welcome/event"
+
 require "welcome/form"
 require "welcome/segment"
 require "welcome/subscription_type"
