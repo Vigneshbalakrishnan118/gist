@@ -52,8 +52,7 @@ module Welcome
       http = Net::HTTP.new(@uri.host, @uri.port)
       http.use_ssl = true
       http.read_timeout = 5 #seconds
-      response = http.request(request)
-      response.body
+      http.request(request)
     end
   end
 end
