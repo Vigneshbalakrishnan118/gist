@@ -53,6 +53,26 @@ module Welcome
       trigger_request(request)
     end
 
+    def create_request(url, params)
+      @uri = URI(url)
+      request = Net::HTTP::Post.new @uri
+      request.body = params.to_json
+      trigger_request(request)
+    end
+
+    def update_request(url, params)
+      @uri = URI(url)
+      request = Net::HTTP::Patch.new @uri
+      request.body = params.to_json
+      trigger_request(request)
+    end
+
+    def delete_request(url)
+      @uri = URI(url)
+      request = Net::HTTP::Delete.new @uri
+      trigger_request(request)
+    end
+
     def trigger_request(request)
       request["Authorization"] = @access_token
       request["Content-Type"] = "application/json"

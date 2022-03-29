@@ -13,6 +13,7 @@ require "welcome/tag"
 require "welcome/team"
 require "welcome/teammate"
 require "net/http"
+require "json"
 
 module Welcome
 
