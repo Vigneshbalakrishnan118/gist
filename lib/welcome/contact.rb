@@ -6,27 +6,20 @@ module Welcome
       fetch("#{@url}contacts/#{id}")
     end
 
-    def create(params:)
-      url = "#{@url}contacts"
-      @uri = URI(url)
-      request = Net::HTTP::Post.new @uri
-      request.body = params
-      trigger_request(request)
+    def find_all(order: "desc", order_by: "created_at", page: 1, per_page: 10)
+      fetch("#{@url}contacts?order=#{order}&order_by=#{order_by}&page=#{page}&per_page=#{per_page}")
     end
 
-    def update(id:, params:)
-      url = "#{@url}contacts/#{id}"
-      @uri = URI(url)
-      request = Net::HTTP::Put.new @uri
-      request.body = params
-      trigger_request(request)
+    def create(params:)
+      create_request("#{@url}contacts", params)
+    end
+
+    def update(params:)
+      create_request("#{@url}contacts", params)
     end
 
     def delete(id:)
-      url = "#{@url}contacts/#{id}"
-      @uri = URI(url)
-      request = Net::HTTP::Delete.new @uri
-      trigger_request(request)
+      delete_request("#{@url}contacts/#{id}")
     end
   end
 end
