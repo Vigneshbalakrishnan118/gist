@@ -3,14 +3,11 @@
 module Welcome
   class Contact < Client
     def find(id:)
-      url = "https://aws-api-testing.getgist.com/contacts/#{id}"
-      @uri = URI(url)
-      request = Net::HTTP::Get.new @uri
-      trigger_request(request)
+      fetch("#{@url}contacts/#{id}")
     end
 
     def create(params:)
-      url = "https://aws-api-testing.getgist.com/contacts/"
+      url = "#{@url}contacts"
       @uri = URI(url)
       request = Net::HTTP::Post.new @uri
       request.body = params
@@ -18,7 +15,7 @@ module Welcome
     end
 
     def update(id:, params:)
-      url = "https://aws-api-testing.getgist.com/contacts/#{id}"
+      url = "#{@url}contacts/#{id}"
       @uri = URI(url)
       request = Net::HTTP::Put.new @uri
       request.body = params
@@ -26,7 +23,7 @@ module Welcome
     end
 
     def delete(id:)
-      url = "https://aws-api-testing.getgist.com/contacts/#{id}"
+      url = "#{@url}contacts/#{id}"
       @uri = URI(url)
       request = Net::HTTP::Delete.new @uri
       trigger_request(request)

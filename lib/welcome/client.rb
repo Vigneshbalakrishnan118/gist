@@ -4,6 +4,7 @@ module Welcome
   class Client
     def initialize(access_token:)
       @access_token = access_token
+      @url = "https://aws-api-testing.getgist.com/"
     end
 
     def contacts
@@ -46,12 +47,18 @@ module Welcome
       Welcome::Conversation.new(access_token: @access_token)
     end
 
+    def fetch(url)
+      @uri = URI(url)
+      request = Net::HTTP::Get.new @uri
+      trigger_request(request)
+    end
+
     def trigger_request(request)
       request["Authorization"] = @access_token
       request["Content-Type"] = "application/json"
       http = Net::HTTP.new(@uri.host, @uri.port)
       http.use_ssl = true
-      http.read_timeout = 5 #seconds
+      http.read_timeout = 5 # seconds
       http.request(request)
     end
   end
