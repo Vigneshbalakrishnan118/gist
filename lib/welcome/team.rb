@@ -3,17 +3,11 @@
 module Welcome
   class Team < Client
     def find_all
-      url = "https://aws-api-testing.getgist.com/teams"
-      @uri = URI(url)
-      request = Net::HTTP::Get.new @uri
-      trigger_request(request)
+      fetch("#{@url}teams")
     end
 
     def find(id:)
-      url = "https://aws-api-testing.getgist.com/teams/#{id}"
-      @uri = URI(url)
-      request = Net::HTTP::Get.new @uri
-      trigger_request(request)
+      fetch("#{@url}teams/#{id}")
     end
   end
 end

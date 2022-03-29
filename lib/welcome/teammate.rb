@@ -3,17 +3,11 @@
 module Welcome
   class Teammate < Client
     def find_all
-      url = "https://aws-api-testing.getgist.com/teammates"
-      @uri = URI(url)
-      request = Net::HTTP::Get.new @uri
-      trigger_request(request)
+      fetch("#{@url}teammates")
     end
 
     def find(id:)
-      url = "https://aws-api-testing.getgist.com/teammates/#{id}"
-      @uri = URI(url)
-      request = Net::HTTP::Get.new @uri
-      trigger_request(request)
+      fetch("#{@url}teammates/#{id}")
     end
   end
 end
