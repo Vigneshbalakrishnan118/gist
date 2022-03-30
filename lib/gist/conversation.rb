@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Welcome
+module Gist
   class Conversation < Client
     def find_all(order: "desc", order_by: "updated_at")
       fetch("#{@url}conversations?order=#{order}&order_by=#{order_by}")

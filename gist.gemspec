@@ -1,24 +1,24 @@
 # frozen_string_literal: true
 
-require_relative "lib/welcome/version"
+require_relative "lib/gist/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "welcome"
-  spec.version       = Welcome::VERSION
+  spec.name          = "gist"
+  spec.version       = Gist::VERSION
   spec.authors       = ["gopinath-mallow"]
   spec.email         = ["gopinath@mallow-tech.com"]
 
   spec.summary       = "greeting message"
   spec.description   = "it will generate a greeting message of given name"
-  spec.homepage      = "https://github.com/gopi115/welcome"
+  spec.homepage      = "https://github.com/gopi115/gist"
   spec.license       = "MIT"
   spec.required_ruby_version = ">= 2.4.0"
 
-  spec.metadata["allowed_push_host"] = "https://github.com/gopi115/welcome"
+  spec.metadata["allowed_push_host"] = "https://github.com/gopi115/gist"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://github.com/gopi115/welcome"
-  spec.metadata["changelog_uri"] = "https://github.com/gopi115/welcome"
+  spec.metadata["source_code_uri"] = "https://github.com/gopi115/gist"
+  spec.metadata["changelog_uri"] = "https://github.com/gopi115/gist"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
