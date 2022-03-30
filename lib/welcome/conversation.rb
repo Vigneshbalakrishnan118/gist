@@ -31,11 +31,11 @@ module Welcome
     end
 
     def assign(id:, params:)
-      create_request("#{@url}conversations/#{id}/messages", params)
+      update_request("#{@url}conversations/#{id}/assign", params)
     end
 
     def unassign(id:, params:)
-      create_request("#{@url}conversations/#{id}/messages", params)
+      update_request("#{@url}conversations/#{id}/assign", params)
     end
 
     def change_status(id:, params:)
@@ -43,7 +43,7 @@ module Welcome
     end
 
     def priority(id:, params:)
-      update_request("#{@url}conversations/#{id}", params)
+      update_request("#{@url}conversations/#{id}/priority", params)
     end
 
     def global_counts
