@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Welcome
+module Gist
   class Contact < Client
     def find(id:)
       fetch("#{@url}contacts/#{id}")

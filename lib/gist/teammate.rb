@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Welcome
+module Gist
   class Teammate < Client
     def find_all
       fetch("#{@url}teammates")

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Welcome
+module Gist
   class Client
     def initialize(access_token:)
       @access_token = access_token

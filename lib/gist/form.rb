@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Welcome
+module Gist
   class Form < Client
     def find_all
       fetch("#{@url}forms")

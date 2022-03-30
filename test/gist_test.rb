@@ -2,9 +2,9 @@
 
 require "test_helper"
 
-class WelcomeTest < Minitest::Test
+class GistTest < Minitest::Test
   def test_that_it_has_a_version_number
-    refute_nil ::Welcome::VERSION
+    refute_nil ::Gist::VERSION
   end
 
   def test_it_does_something_useful
