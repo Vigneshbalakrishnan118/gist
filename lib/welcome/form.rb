@@ -10,6 +10,10 @@ module Welcome
       fetch("#{@url}forms?form_id=#{id}")
     end
 
+    def subscribe_to_a_form(id:, params:)
+      create_request("#{@url}forms/#{id}/subscribe", params)
+    end
+
     def find_submissions(id:)
       fetch("#{@url}forms/#{id}/submissions")
     end

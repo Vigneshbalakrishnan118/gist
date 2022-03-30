@@ -9,5 +9,9 @@ module Welcome
     def find(id:)
       fetch("#{@url}campaigns/#{id}")
     end
+
+    def subscribe(params:)
+      create_request("#{@url}campaigns/", params)
+    end
   end
 end

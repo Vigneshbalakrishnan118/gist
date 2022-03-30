@@ -21,5 +21,13 @@ module Welcome
     def delete(id:)
       delete_request("#{@url}contacts/#{id}")
     end
+
+    def create_in_batch(params)
+      create_request("#{@url}contacts", params)
+    end
+
+    def update_in_batch(params)
+      create_request("#{@url}contacts", params)
+    end
   end
 end
