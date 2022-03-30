@@ -14,6 +14,8 @@ require "welcome/team"
 require "welcome/teammate"
 require "net/http"
 require "json"
+require "active_support"
+require "active_support/core_ext"
 
 module Welcome
 
