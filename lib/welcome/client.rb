@@ -8,43 +8,43 @@ module Welcome
     end
 
     def contacts
-      Welcome::Contact.new(access_token: @access_token)
+      Contact.new(access_token: @access_token)
     end
 
     def events
-      Welcome::Event.new(access_token: @access_token)
+      Event.new(access_token: @access_token)
     end
 
     def tags
-      Welcome::Tag.new(access_token: @access_token)
+      Tag.new(access_token: @access_token)
     end
 
     def subscription_types
-      Welcome::SubscriptionType.new(access_token: @access_token)
+      SubscriptionType.new(access_token: @access_token)
     end
 
     def segments
-      Welcome::Segment.new(access_token: @access_token)
+      Segment.new(access_token: @access_token)
     end
 
     def forms
-      Welcome::Form.new(access_token: @access_token)
+      Form.new(access_token: @access_token)
     end
 
     def campaigns
-      Welcome::Campaign.new(access_token: @access_token)
+      Campaign.new(access_token: @access_token)
     end
 
     def teams
-      Welcome::Team.new(access_token: @access_token)
+      Team.new(access_token: @access_token)
     end
 
     def teammates
-      Welcome::Teammate.new(access_token: @access_token)
+      Teammate.new(access_token: @access_token)
     end
 
     def conversations
-      Welcome::Conversation.new(access_token: @access_token)
+      Conversation.new(access_token: @access_token)
     end
 
     def fetch(url)
@@ -67,9 +67,10 @@ module Welcome
       trigger_request(request)
     end
 
-    def delete_request(url)
+    def delete_request(url, params: {})
       @uri = URI(url)
       request = Net::HTTP::Delete.new @uri
+      request.body = params.to_json if params.present?
       trigger_request(request)
     end
 
