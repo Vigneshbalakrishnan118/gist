@@ -5,7 +5,7 @@ require "gist/client"
 require "gist/team"
 
 RSpec.describe Gist::Contact do
-  before do
+  before(:all) do
     @client = Gist::Client.new(access_token: "Bearer 2rHqyAVcuGNdwWEs7IPABm/EmrkbyOzrW55DKHqQkaaL3CVjvV+bdwcd+wwm7sTGvLg=")
   end
 
