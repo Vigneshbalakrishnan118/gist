@@ -2,8 +2,14 @@
 
 module Gist
   class Contact < Client
-    def find(id:)
-      fetch("#{@url}contacts/#{id}")
+    def find(id: nil, email: nil, user_id: nil)
+      if id.present?
+        fetch("#{@url}contacts/#{id}")
+      elsif email.present?
+        fetch("#{@url}contacts?email=#{email}")
+      elsif user_id.present?
+        fetch("#{@url}contacts?user_id=#{user_id}")
+      end
     end
 
     def find_all(order: "desc", order_by: "created_at", page: 1, per_page: 10)
@@ -18,8 +24,14 @@ module Gist
       create_request("#{@url}contacts", params)
     end
 
-    def delete(id:)
-      delete_request("#{@url}contacts/#{id}")
+    def delete(id: nil, email: nil, user_id: nil)
+      if id.present?
+        delete_request("#{@url}contacts/#{id}")
+      elsif email.present?
+        delete_request("#{@url}contacts?email=#{email}")
+      elsif user_id.present?
+        delete_request("#{@url}contacts?user_id=#{user_id}")
+      end
     end
 
     def create_in_batch(params:)
