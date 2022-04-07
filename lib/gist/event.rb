@@ -6,7 +6,7 @@ module Gist
       fetch("#{@url}events?event_type=all")
     end
 
-    def create(params: {})
+    def track(params: {})
       create_request("#{@url}events", params)
     end
   end
