@@ -27,8 +27,7 @@ RSpec.describe Gist::Contact do
   end
 
   it "should find all messages" do
-    response = @client.conversations.find_all_messages(id: @conversation_details["conversation"]["id"])
-    expect(response[:status]).to eq("200 OK")
+    expect(@messages[:status]).to eq("200 OK")
   end
 
   it "should apply tag" do

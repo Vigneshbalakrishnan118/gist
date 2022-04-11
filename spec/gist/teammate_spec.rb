@@ -2,7 +2,7 @@
 require "spec_helper"
 require "gist"
 require "gist/client"
-require "gist/team"
+require "gist/teammate"
 
 RSpec.describe Gist::Contact do
   before(:all) do
