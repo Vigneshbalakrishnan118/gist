@@ -16,6 +16,11 @@ RSpec.describe Gist::Contact do
     expect(@conversation[:status]).to eq("200 OK")
   end
 
+  it "shouldn't create" do
+    response = @client.conversations.create(params: example_invalid_conversation)
+    expect(response[:status]).to eq("422 Unprocessable Entity")
+  end
+
   it "should update" do
     response = @client.conversations.update(id: @conversation_details["conversation"]["id"], params: example_update_conversation)
     expect(response[:status]).to eq("200 OK")
@@ -48,6 +53,11 @@ RSpec.describe Gist::Contact do
     expect(response[:status]).to eq("200 OK")
   end
 
+  it "shouldn't change status" do
+    response = @client.conversations.change_status(id: @conversation_details["conversation"]["id"], params: invalid_change_status)
+    expect(response[:status]).to eq("422 Unprocessable Entity")
+  end
+
   it "should assign conversation" do
     response = @client.conversations.assign(id: @conversation_details["conversation"]["id"], params: example_assign)
     expect(response[:status]).to eq("200 OK")
@@ -61,6 +71,11 @@ RSpec.describe Gist::Contact do
   it "should reply" do
     response = @client.conversations.add_reply(id: @conversation_details["conversation"]["id"], params: example_reply)
     expect(response[:status]).to eq("200 OK")
+  end
+
+  it "shouldn't reply" do
+    response = @client.conversations.add_reply(id: @conversation_details["conversation"]["id"], params: example_invalid_reply)
+    expect(response[:status]).to eq("422 Unprocessable Entity")
   end
 
   it "should delete" do

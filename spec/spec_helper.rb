@@ -112,6 +112,18 @@ def example_create_contact
   }
 end
 
+def example_invalid_contact
+  {
+    "name": "Rubamaga",
+    "signed_up_at": "",
+    "last_seen_ip": "",
+    "last_seen_user_agent": "",
+    "unsubscribed_from_emails": false,
+    "custom_properties": { "age": 23 },
+    "tags": %w[tagA tagB tagC]
+  }
+end
+
 def example_update_contact
   {
     "email": "rubamaga@example.com",
@@ -156,9 +168,23 @@ def example_event_track
   }
 end
 
+def example_invalid_event
+  {
+    "properties": { "manual_record": true, "recorded_from": "backend" },
+    "occurred_at": nil
+  }
+end
+
 def example_create_conversation
   {
     "from": { "id": "150633" }, "body": "Hello there!", "title": "Conversation title",
+    "custom_properties": { "user_id": 145, "city": "London", "last_seen": 1502979465, "active": true, }
+  }
+end
+
+def example_invalid_conversation
+  {
+    "from": { "id": "150633" }, "body": "", "title": "Conversation title",
     "custom_properties": { "user_id": 145, "city": "London", "last_seen": 1502979465, "active": true, }
   }
 end
@@ -173,6 +199,10 @@ end
 
 def example_change_status
   { "state": "closed", "teammate_id": 31 }
+end
+
+def invalid_change_status
+  { "state": "", "teammate_id": 31 }
 end
 
 def example_priority
@@ -192,5 +222,13 @@ def example_reply
     "message_type": "reply",
     "from": { "type": "teammate", "teammate_id": 31 },
     "body": "thank you"
+  }
+end
+
+def example_invalid_reply
+  {
+    "message_type": "reply",
+    "from": { "type": "teammate", "teammate_id": 31 },
+    "body": ""
   }
 end

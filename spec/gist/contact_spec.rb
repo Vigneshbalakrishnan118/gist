@@ -14,9 +14,19 @@ RSpec.describe Gist::Contact do
     expect(@contact[:status]).to eq("200 OK")
   end
 
+  it "shouldn't create" do
+    response = @client.contacts.create(params: example_invalid_contact)
+    expect(response[:status]).to eq("422 Unprocessable Entity")
+  end
+
   it "should update" do
     response = @client.contacts.update(params: example_update_contact)
     expect(response[:status]).to eq("200 OK")
+  end
+
+  it "shouldn't update" do
+    response = @client.contacts.update(params: example_invalid_contact)
+    expect(response[:status]).to eq("422 Unprocessable Entity")
   end
 
   it "should find with id" do
