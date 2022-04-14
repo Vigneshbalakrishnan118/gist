@@ -11,4 +11,8 @@ gem "minitest", "~> 5.0"
 
 gem "rubocop", "~> 1.7"
 
-gem 'net-http'
+gem "net-http"
+
+gem "rspec", "~> 3.5"
+
+gem "activesupport"
