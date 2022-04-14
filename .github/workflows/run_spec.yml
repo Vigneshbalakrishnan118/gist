@@ -1,0 +1,17 @@
+# This workflow uses actions that are not certified by GitHub.  They are
+# provided by a third-party and are governed by separate terms of service,
+# privacy policy, and support documentation.
+#
+# This workflow will install a prebuilt Ruby version, install dependencies, and
+# run tests and linters.
+
+name: "Rspec test"
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run testcases
+        env:
+          BEARER_ACCESS_TOKEN: ${{secrets.BEARER_ACCESS_TOKEN}}
+        run: bundle exec rspec spec
