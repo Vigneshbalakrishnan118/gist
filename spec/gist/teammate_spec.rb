@@ -5,7 +5,7 @@ require "gist/teammate"
 
 RSpec.describe Gist::Teammate do
   before(:all) do
-    @client = Gist::Client.new(access_token: "Bearer 2rHqyAVcuGNdwWEs7IPABm/EmrkbyOzrW55DKHqQkaaL3CVjvV+bdwcd+wwm7sTGvLg=")
+    @client = Gist::Client.new(access_token: ENV["BEARER_ACCESS_TOKEN"])
   end
 
   describe "find teammate" do
