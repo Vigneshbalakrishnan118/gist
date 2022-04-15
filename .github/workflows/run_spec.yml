@@ -12,7 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run bundle install
-        working-directory: ~/gist
         run: |
           gem install bundler
           bundle install
