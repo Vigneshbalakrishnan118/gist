@@ -15,7 +15,6 @@ jobs:
         with:
           ruby-version: 3.0.0
       - name: Run bundle install
-        working-directory: ~/gist
         run: |
           gem install bundler
           bundle install
