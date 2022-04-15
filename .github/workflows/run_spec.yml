@@ -18,4 +18,6 @@ jobs:
       - name: Run testcases
         env:
           BEARER_ACCESS_TOKEN: ${{secrets.BEARER_ACCESS_TOKEN}}
-        run: bundle exec rspec spec
+          run: |
+           gem install bundler
+           bundle exec rspec spec
