@@ -24,7 +24,7 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Run bundle install
-        working-directory: ~/gist
+        working-directory: ./gist
         run: |
           gem install bundler
           bundle install
