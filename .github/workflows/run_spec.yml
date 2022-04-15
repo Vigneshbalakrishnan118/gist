@@ -11,6 +11,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.0
       - name: Run bundle install
         run: |
           gem install bundler
