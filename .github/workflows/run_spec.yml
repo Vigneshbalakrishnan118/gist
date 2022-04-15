@@ -14,7 +14,8 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.0.0
-      - run: bundle install
+      - name: Run bundle install
+        run: bundle install
       - name: Run testcases
         env:
           BEARER_ACCESS_TOKEN: ${{secrets.BEARER_ACCESS_TOKEN}}
