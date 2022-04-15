@@ -26,11 +26,11 @@ jobs:
       - name: Run bundle install
         run: |
           gem install bundler
+          bundle install --gemfile= ~/gist/Gemfile
       
       # Runs a single command using the runners shell
       - name: Run testcases
         env:
           BEARER_ACCESS_TOKEN: ${{secrets.BEARER_ACCESS_TOKEN}}
         run: |
-         gem install rspec
          bundle exec rspec spec
