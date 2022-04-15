@@ -14,10 +14,8 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.0.0
-          bundler-cache: true
+      - run: bundle install
       - name: Run testcases
         env:
           BEARER_ACCESS_TOKEN: ${{secrets.BEARER_ACCESS_TOKEN}}
-          run: |
-           gem install bundler
-           bundle exec rspec spec
+          run: bundle exec rspec spec
