@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run bundle install
+        working-directory: ./app
         run: |
           gem install bundler
           bundle install
