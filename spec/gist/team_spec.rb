@@ -5,7 +5,7 @@ require "gist/team"
 
 RSpec.describe Gist::Team do
   before(:all) do
-    @client = Gist::Client.new(access_token: ENV["BEARER_ACCESS_TOKEN"])
+    @client = Gist::Client.new(access_token: "Sp8dwaxjE7NqcfMm0X2jOSK58hvvkpZGTnou5eHA9KTIQ/hlmX5U60kZx95kdMrvkqo=")
   end
 
   describe "find team" do
