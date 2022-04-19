@@ -1,4 +1,4 @@
-name: env_tutorial
+name: gist_test_cases
 ## Triggers the workflow on when there is a push, or 
 ## pull request on the main branch
 on: [pull_request, push]
@@ -10,4 +10,4 @@ jobs:
     steps:
       - name: test-cases
         ## Reference your environment variables
-        run: echo "The API key is:${{secrets.API_KEY}}"
+        run: bundle exec rspec spec
