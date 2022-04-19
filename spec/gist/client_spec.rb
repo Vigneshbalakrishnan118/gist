@@ -4,7 +4,7 @@ require 'gist/client'
 
 RSpec.describe Gist::Client do
   before do
-    @client = Gist::Client.new(access_token: "2rHqyAVcuGNdwWEs7IPABm/EmrkbyOzrW55DKHqQkaaL3CVjvV+bdwcd+wwm7sTGvLg=")
+    @client = Gist::Client.new(access_token: "Sp8dwaxjE7NqcfMm0X2jOSK58hvvkpZGTnou5eHA9KTIQ/hlmX5U60kZx95kdMrvkqo=")
   end
 
   describe "#initialize" do

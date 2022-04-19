@@ -5,7 +5,7 @@ require "gist/conversation"
 
 RSpec.describe Gist::Conversation do
   before(:all) do
-    @client = Gist::Client.new(access_token: ENV["BEARER_ACCESS_TOKEN"])
+    @client = Gist::Client.new(access_token: "Sp8dwaxjE7NqcfMm0X2jOSK58hvvkpZGTnou5eHA9KTIQ/hlmX5U60kZx95kdMrvkqo=")
     @conversation = @client.conversations.create(params: example_create_conversation)
     @conversation_details = JSON.parse(@conversation.body)
     @messages = @client.conversations.find_all_messages(id: @conversation_details["conversation"]["id"])
