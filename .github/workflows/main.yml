@@ -8,6 +8,18 @@ jobs:
     ## The type of runner that the job will run on
     runs-on: ubuntu-latest
     steps:
-      - name: test-cases
-        ## Reference your environment variables
-        run: bundle exec rspec spec
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.0
+
+      - name: Run bundle install
+        run: |
+          gem install bundler
+          bundle install
+            
+      - name: Run testcases
+        env:
+          API_KEY: ${{secrets.API_KEY}}
+        run: |
+          bundle exec rspec spec
