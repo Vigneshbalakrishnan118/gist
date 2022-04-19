@@ -5,21 +5,21 @@ require "gist/event"
 
 RSpec.describe Gist::Event do
   before(:all) do
-    @client = Gist::Client.new(access_token: ENV["BEARER_ACCESS_TOKEN"])
+    @client = Gist::Client.new(access_token: "Bearer 2rHqyAVcuGNdwWEs7IPABm/EmrkbyOzrW55DKHqQkaaL3CVjvV+bdwcd+wwm7sTGvLg=")
   end
 
   describe "track event" do
     context "with valid parameters" do
       it "should track" do
         response = @client.events.track(params: example_event_track)
-        expect(response[:status]).to eq("200 OK")
+        expect(response.code).to eq("200")
       end
     end
 
     context "with invalid parameters" do
       it "shouldn't track" do
         response = @client.events.track(params: example_invalid_event)
-        expect(response[:status]).to eq("422 Unprocessable Entity")
+        expect(response.code).to eq("422")
       end
     end
   end
@@ -27,7 +27,7 @@ RSpec.describe Gist::Event do
   describe "event index" do
     it "should be listable" do
       response = @client.events.find_all
-      expect(response[:status]).to eq("200 OK")
+      expect(response.code).to eq("200")
     end
   end
 end
