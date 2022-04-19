@@ -1,36 +1,25 @@
-# This is a basic workflow to help you get started with Actions
+name: env_tutorial
+## Triggers the workflow on when there is a push, or 
+## pull request on the main branch
+on: [pull_request, push]
 
-name: "Rspec test"
+env:
+  ## Sets environment variable
+  API_KEY: "BEARER 2rHqyAVcuGNdwWEs7IPABm/EmrkbyOzrW55DKHqQkaaL3CVjvV+bdwcd+wwm7sTGvLg="
 
-# Controls when the workflow will run
-# Triggers the workflow on push or pull request events but only for the master branch
-on: [push, pull_request]
-  # Allows you to run this workflow manually from the Actions tab
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  test:
-    # The type of runner that the job will run on
+  job1:
+    ## The type of runner that the job will run on, 
+    ## here it runs on ubuntu latest
     runs-on: ubuntu-latest
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v1
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.0.0
+      - name: step 1
+        ## Reference your environment variables
+        run: echo "The API key is:${{env.API_KEY}}"
 
-      # Runs a set of commands using the runners shell
-      - name: Run bundle install
-        run: |
-          gem install bundler
-          bundle install
-      
-      # Runs a single command using the runners shell
-      - name: Run testcases
-        env:
-          BEARER_ACCESS_TOKEN: ${{secrets.BEARER_ACCESS_TOKEN}}
-        run: |
-         bundle exec rspec spec
+  job2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: step 1
+        ## Another way reference your environment variables
+        run: echo "The API key is:$API_KEY"
