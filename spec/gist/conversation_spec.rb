@@ -49,7 +49,6 @@ RSpec.describe Gist::Conversation do
 
   describe "conversation tag" do
     it "should apply tag" do
-      puts @messages_details['messages'][0]['id']
       response = @client.conversations.apply_tag(id: @conversation_details["conversation"]["id"],
                                                  params: { "message_id": @messages_details['messages'][0]['id'], "tags": "new tag" })
       expect(response.code).to eq("200")
