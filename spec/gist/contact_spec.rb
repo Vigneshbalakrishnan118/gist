@@ -5,7 +5,7 @@ require "gist/contact"
 
 RSpec.describe Gist::Contact do
   before(:all) do
-    @client = Gist::Client.new(access_token: "Bearer 2rHqyAVcuGNdwWEs7IPABm/EmrkbyOzrW55DKHqQkaaL3CVjvV+bdwcd+wwm7sTGvLg=")
+    @client = Gist::Client.new(access_token: ENV["API_KEY"])
     @contact = @client.contacts.create(params: example_create_contact)
     @contact_details = JSON.parse(@contact.body)
   end
