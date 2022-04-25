@@ -48,39 +48,58 @@ module Gist
     end
 
     def fetch(url)
-      @uri = URI(url)
-      request = Net::HTTP::Get.new @uri
-      trigger_request(request)
+      trigger_request(url, method: "get")
     end
 
-    def create_request(url, params)
-      @uri = URI(url)
-      request = Net::HTTP::Post.new @uri
-      request.body = params.to_json
-      trigger_request(request)
+    def create_request(url, body, method = "post")
+      trigger_request(url, post_body: body, method: method)
     end
 
-    def update_request(url, params)
-      @uri = URI(url)
-      request = Net::HTTP::Patch.new @uri
-      request.body = params.to_json
-      trigger_request(request)
+    def update_request(url, body, method = "patch")
+      trigger_request(url, post_body: body, method: method)
     end
 
-    def delete_request(url, params: {})
-      @uri = URI(url)
-      request = Net::HTTP::Delete.new @uri
-      request.body = params.to_json if params.present?
-      trigger_request(request)
+    def delete_request(url, body = {}, method = "delete")
+      trigger_request(url, post_body: body, method: method)
     end
 
-    def trigger_request(request)
-      request["Authorization"] = @access_token
-      request["Content-Type"] = "application/json"
+    private
+
+    def trigger_request(url, post_body: nil, method: "get")
+      @uri = URI(url)
+      request = send("http_#{method}").new(@uri.request_uri, { "Content-Type" => "application/json", "Authorization" => @access_token })
+      request.body = post_body.to_json unless post_body.nil?
       http = Net::HTTP.new(@uri.host, @uri.port)
       http.use_ssl = true
       http.read_timeout = 5 # seconds
-      http.request(request)
+      response = http.request(request)
+      raise Gist::ApiError, response.body unless response.is_a?(Net::HTTPSuccess)
+      json_response = JSON.parse(response.body)
+      return json_response[request_class] if json_response.key?(request_class)
+
+      return json_response[request_class.pluralize] if json_response.key?(request_class.pluralize)
+
+      json_response
+    end
+
+    def http_get
+      Net::HTTP::Get
+    end
+
+    def http_post
+      Net::HTTP::Post
+    end
+
+    def http_patch
+      Net::HTTP::Patch
+    end
+
+    def http_delete
+      Net::HTTP::Delete
+    end
+
+    def request_class
+      @request_class ||= self.class.name.singularize.underscore.split("/").last
     end
   end
 end

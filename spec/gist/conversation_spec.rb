@@ -1,138 +1,148 @@
 require "spec_helper"
-require "gist"
-require "gist/client"
-require "gist/conversation"
 
 RSpec.describe Gist::Conversation do
   before(:all) do
     @client = Gist::Client.new(access_token: ENV["API_KEY"])
+    @contact = @client.contacts.create(params: example_create_contact)
     @conversation = @client.conversations.create(params: example_create_conversation)
-    @conversation_details = JSON.parse(@conversation.body)
-    @messages = @client.conversations.find_all_messages(id: @conversation_details["conversation"]["id"])
-    @messages_details = JSON.parse(@messages.body)
+    @messages = @client.conversations.find_all_messages(id: @conversation["id"])
   end
 
   describe "create conversation" do
     context "with valid parameters" do
       it "should create" do
-        expect(@conversation.code).to eq("200")
+        conversation = @client.conversations.create(params: example_create_conversation)
+        expect(conversation["contacts"][0]["id"]).to eq(@contact["id"])
       end
     end
 
     context "with valid parameters" do
       it "shouldn't create" do
-        response = @client.conversations.create(params: example_invalid_conversation)
-        expect(response.code).to eq("422")
+        expect{
+          @client.conversations.create(params: example_invalid_conversation)
+        }.to raise_error(Gist::ApiError)
       end
     end
   end
 
   describe "update conversation" do
     it "should update" do
-      response = @client.conversations.update(id: @conversation_details["conversation"]["id"], params: example_update_conversation)
-      expect(response.code).to eq("200")
+      conversation = @client.conversations.update(id: @conversation["id"], params: example_update_conversation)
+      expect(conversation["contacts"][0]["id"]).to eq(@contact["id"])
+      expect(conversation["custom_properties"]["city"]).to eq("London")
     end
   end
 
   describe "find conversation" do
     it "should find with id" do
-      response = @client.conversations.find(id: @conversation_details["conversation"]["id"])
-      expect(response.code).to eq("200")
+      conversation = @client.conversations.find(id: @conversation["id"])
+      expect(conversation["id"]).to eq(@conversation["id"])
+      expect(conversation["contacts"][0]["id"]).to eq(@contact["id"])
     end
   end
 
   describe "find messages" do
     it "should find all messages" do
-      expect(@messages.code).to eq("200")
+      conversation_messages = @client.conversations.find_all_messages(id: @conversation["id"])
+      expect(conversation_messages["messages"]).to be_a(Array)
     end
   end
 
   describe "conversation tag" do
+    before(:all) do
+      conversation = @client.conversations.apply_tag(id: @conversation["id"],
+                                                     params: { "message_id": @messages['messages'][0]['id'], "tags": "new tag" })
+      @tag = conversation["tags"].select{ |tag| tag if tag["name"] == "new tag" }.first
+    end
     it "should apply tag" do
-      response = @client.conversations.apply_tag(id: @conversation_details["conversation"]["id"],
-                                                 params: { "message_id": @messages_details['messages'][0]['id'], "tags": "new tag" })
-      expect(response.code).to eq("200")
+      expect(@tag).to_not be_nil
+      expect(@tag["name"]).to eq("new tag")
     end
 
     it "should remove tag" do
-      response = @client.conversations.remove_tag(id: @conversation_details["conversation"]["id"],
-                                                  params: { "message_id": @messages_details['messages'][0]['id'], "tag_id": 328 })
-      expect(response.code).to eq("200")
+      conversation = @client.conversations.remove_tag(id: @conversation["id"],
+                                                  params: { "message_id": @messages['messages'][0]['id'], "tag_id": @tag["id"] })
+      tag = conversation["tags"].select{ |tag| tag if tag["name"] == "new tag" }.first
+      expect(tag).to be_nil
     end
   end
 
   describe "conversation status change" do
     context "with valid parameters" do
       it "should change status" do
-        response = @client.conversations.change_status(id: @conversation_details["conversation"]["id"], params: example_change_status)
-        expect(response.code).to eq("200")
+        conversation = @client.conversations.change_status(id: @conversation["id"], params: example_change_status)
+        expect(conversation["state"]).to eq(example_change_status[:state])
       end
     end
 
     context "with valid parameters" do
       it "shouldn't change status" do
-        response = @client.conversations.change_status(id: @conversation_details["conversation"]["id"], params: invalid_change_status)
-        expect(response.code).to eq("422")
+        expect{
+          @client.conversations.change_status(id: @conversation["id"], params: invalid_change_status)
+        }.to raise_error(Gist::ApiError)
       end
     end
   end
 
   describe "conversation assignment" do
     it "should assign conversation" do
-      response = @client.conversations.assign(id: @conversation_details["conversation"]["id"], params: example_assign)
-      expect(response.code).to eq("200")
+      conversation = @client.conversations.assign(id: @conversation["id"], params: example_assign)
+      expect(conversation["assignee"]["id"]).to eq(example_assign[:assignee_id])
+      expect(conversation["assignee"]["type"]).to eq("teammate")
     end
 
     it "should unassign conversation" do
-      response = @client.conversations.unassign(id: @conversation_details["conversation"]["id"], params: example_unassign)
-      expect(response.code).to eq("200")
+      conversation = @client.conversations.unassign(id: @conversation["id"], params: example_unassign)
+      expect(conversation["assignee"]).to be_nil
     end
   end
 
   describe "conversation reply" do
     context "with valid parameters" do
       it "should reply" do
-        response = @client.conversations.add_reply(id: @conversation_details["conversation"]["id"], params: example_reply)
-        expect(response.code).to eq("200")
+        message = @client.conversations.add_reply(id: @conversation["id"], params: example_reply)
+        expect(message["message"]["author"]["type"]).to eq(example_reply[:from][:type])
+        expect(message["message"]["author"]["id"]).to eq(example_reply[:from][:teammate_id])
       end
     end
 
-    context "with valid parameters" do
+    context "with invalid parameters" do
       it "shouldn't reply" do
-        response = @client.conversations.add_reply(id: @conversation_details["conversation"]["id"], params: example_invalid_reply)
-        expect(response.code).to eq("422")
+        expect{
+          @client.conversations.add_reply(id: @conversation["id"], params: example_invalid_reply)
+        }.to raise_error(Gist::ApiError)
       end
     end
   end
 
   describe "delete conversation" do
     it "should delete" do
-      response = @client.conversations.delete(id: @conversation_details["conversation"]["id"])
-      expect(response.code).to eq("200")
+      conversation = @client.conversations.delete(id: @conversation["id"])
+      expect(conversation["id"]).to eq(@conversation["id"])
     end
   end
 
   describe "conversation index" do
     it "should be listable" do
-      response = @client.conversations.find_all
-      expect(response.code).to eq("200")
+      conversations = @client.conversations.find_all
+      expect(conversations).to be_a(Array)
     end
   end
 
   describe "conversation count" do
     it "should get global count" do
-      response = @client.conversations.global_counts
-      expect(response.code).to eq("200")
+      counts = @client.conversations.global_counts
+      expect(counts["conversation_count"]).to_not be_nil
     end
 
     it "should get teammates count" do
-      response = @client.conversations.teammates_count
-      expect(response.code).to eq("200")
+      counts = @client.conversations.teammates_count
+      expect(counts["conversation_count"]).to_not be_nil
     end
 
     it "should get teams count" do
-      response = @client.conversations.teams_count
-      expect(response.code).to eq("200")
+      counts = @client.conversations.teams_count
+      expect(counts["conversation_count"]).to_not be_nil
     end
   end
 end

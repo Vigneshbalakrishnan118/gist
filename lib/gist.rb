@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "gist/version"
+require 'gist/api_error'
 require "gist/client"
 require "gist/campaign"
 require "gist/contact"

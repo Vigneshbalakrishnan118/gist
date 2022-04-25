@@ -63,7 +63,7 @@ module Gist
     end
 
     def remove_tag(id:, params:)
-      delete_request("#{@url}conversations/#{id}/tags", params: params)
+      delete_request("#{@url}conversations/#{id}/tags", params)
     end
   end
 end
