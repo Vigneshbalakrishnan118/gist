@@ -13,6 +13,8 @@
 # it.
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require "gist"
+
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
@@ -177,14 +179,14 @@ end
 
 def example_create_conversation
   {
-    "from": { "id": "150633" }, "body": "Hello there!", "title": "Conversation title",
+    "from": { "id": @contact['id'] }, "body": "Hello there!", "title": "Conversation title",
     "custom_properties": { "user_id": 145, "city": "London", "last_seen": 1502979465, "active": true, }
   }
 end
 
 def example_invalid_conversation
   {
-    "from": { "id": "150633" }, "body": "", "title": "Conversation title",
+    "from": { "id": @contact['id'] }, "body": "", "title": "Conversation title",
     "custom_properties": { "user_id": 145, "city": "London", "last_seen": 1502979465, "active": true, }
   }
 end

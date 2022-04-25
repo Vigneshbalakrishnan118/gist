@@ -1,6 +1,4 @@
 require 'spec_helper'
-require 'gist'
-require 'gist/client'
 
 RSpec.describe Gist::Client do
   before do
@@ -12,5 +10,4 @@ RSpec.describe Gist::Client do
       expect(@client).to be_instance_of(Gist::Client)
     end
   end
-
 end
