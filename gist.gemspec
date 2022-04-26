@@ -3,7 +3,7 @@
 require_relative "lib/gist/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "gist"
+  spec.name          = "gist-api-ruby"
   spec.version       = Gist::VERSION
   spec.authors       = ["gopinath-mallow"]
   spec.email         = ["gopinath@mallow-tech.com"]
